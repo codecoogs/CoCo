@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'CodeCoogs-Discord-Bot'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_55B1D893556A4B78BBE100B717916D79 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_307E7749A1B04AE0A0624652445A24D1 }}
           package: .
