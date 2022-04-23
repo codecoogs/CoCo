@@ -45,22 +45,43 @@ client.on('ready', () => {
 });
 
 // Message handling
+const sendWelcomeMessage = (message) => {
+  let rulesChannelId = "897566470387671092";
+  let ran = Math.floor((Math.random() * 10) + 1);
+    if (ran === 1)
+      message.channel.send("I lost my life savings from dogecoin now go read <#${rulesChannelId}>");
+    else if (ran === 2)
+      message.channel.send("I bet you won't read <#${rulesChannelId}>");
+    else if (ran === 3)
+      message.channel.send("Read <#${rulesChannelId}> if you want rough brain");
+};
+
+const deleteMessagesInWrongChannel = async(message, botCommandChannelId) => {
+  let botMessageId;
+  let userCommandMessageId = message.id;
+  message.channel.send(`Go to <#${botCommandChannelId}>. Both messages will be deleted in 15 seconds.`)
+      .then(msg => {
+        botMessageId = msg.id;
+      });
+    
+    setTimeout(async() => {
+      if (message.channel.type !== "DM" && botMessageId !== null && userCommandMessageId !== null) {
+        await message.channel.messages.delete(userCommandMessageId);
+        await message.channel.messages.delete(botMessageId);
+      }
+    }, 15000);
+};
+
 client.on('messageCreate', async message => {
 
   // Skip if message from bot
   if (message.author.bot)
     return;
-
+  
   // Welcome channel is undefined when not found
   let welcomeChannel = message.guild?.channels.cache.find(c => c.name === 'welcome');
   if (welcomeChannel && message.channelId === welcomeChannel.id) {
-    let ran = Math.floor((Math.random() * 10) + 1);
-    if (ran === 1)
-      message.channel.send("I lost my life savings from dogecoin now go read <#897566470387671092>");
-    else if (ran === 2)
-      message.channel.send("I bet you won't read <#897566470387671092>");
-    else if (ran === 3)
-      message.channel.send("Read <#897566470387671092> if you want rough brain");
+    sendWelcomeMessage(message);
   }
 
   if (!message.content.startsWith(prefix))
@@ -75,6 +96,14 @@ client.on('messageCreate', async message => {
   let commandHandler = modules.get(command);
   // Abort when the command is undefined
   if (!commandHandler) return;
+  
+  // Restrict command access
+  let botCommandChannelId = '897596222255300658';
+  let testingChannelId = '897596353897721907';
+  if (message.channelId !== botCommandChannelId && message.channelId !== testingChannelId) {
+    await deleteMessagesInWrongChannel(message, botCommandChannelId);
+    return;
+  }
   // All commands use this interface
   if (commandHandler.command) commandHandler.command(message, args, client, modules);
 });
