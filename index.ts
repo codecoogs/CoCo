@@ -108,6 +108,28 @@ client.on('messageCreate', async message => {
   if (commandHandler.command) commandHandler.command(message, args, client, modules);
 });
 
+const sendDeletedMessage = async(message) => {
+  let trackingChannelId = '967560432732766280';
+    await message.guild.channels.fetch(trackingChannelId)
+      .then(channel => {
+        let msg = `__ID:__ ${message.author.id} \n__Tag:__ ${message.author.tag} \n__Deleted Message:__ ${message.content}`;
+        channel.send(msg);
+        if (message.attachments) {
+          message.attachments.forEach(attachment => {
+              const link = attachment.url;
+              channel.send({ files: [link] });
+          });
+        }
+      });
+};
+
+client.on("messageDelete", async (message) => {
+    if(!message.guild) 
+        return;
+
+    await sendDeletedMessage(message);
+});
+
 // Host server
 keepAlive();
 
