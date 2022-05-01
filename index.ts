@@ -9,6 +9,7 @@ import ProfileModule from "./modules/profile";
 import PointsModule from "./modules/points";
 import { run } from './instagram/instagram';
 import { startJob } from './timed_messages/newyear';
+import { testing } from "googleapis/build/src/apis/testing";
 
 // Configuration
 require('dotenv').config();
@@ -45,22 +46,22 @@ client.on('ready', () => {
 });
 
 // Message handling
-const sendWelcomeMessage = (message) => {
+const sendWelcomeMessage = (message: any) => {
   let rulesChannelId = "897566470387671092";
   let ran = Math.floor((Math.random() * 10) + 1);
     if (ran === 1)
-      message.channel.send("I lost my life savings from dogecoin now go read <#${rulesChannelId}>");
+      message.channel.send(`I lost my life savings from dogecoin now go read <#${rulesChannelId}>`);
     else if (ran === 2)
-      message.channel.send("I bet you won't read <#${rulesChannelId}>");
+      message.channel.send(`I bet you won't read <#${rulesChannelId}>`);
     else if (ran === 3)
-      message.channel.send("Read <#${rulesChannelId}> if you want rough brain");
+      message.channel.send(`Read <#${rulesChannelId}> if you want rough brain`);
 };
 
-const deleteMessagesInWrongChannel = async(message, botCommandChannelId) => {
-  let botMessageId;
+const deleteMessagesInWrongChannel = async(message: any, botCommandChannelId: string) => {
+  let botMessageId: string;
   let userCommandMessageId = message.id;
   message.channel.send(`Go to <#${botCommandChannelId}>. Both messages will be deleted in 15 seconds.`)
-      .then(msg => {
+      .then((msg: any) => {
         botMessageId = msg.id;
       });
     
@@ -108,13 +109,50 @@ client.on('messageCreate', async message => {
   if (commandHandler.command) commandHandler.command(message, args, client, modules);
 });
 
+const sendDeletedMessage = async(message: any) => {
+  let trackingChannelId = '967560432732766280';
+    await message.guild.channels.fetch(trackingChannelId)
+      .then((channel: any) => {
+        const embed = new Discord.MessageEmbed();
+        embed.setTitle(`Deleted Message`);
+        embed.setDescription(message?.content);
+        embed.addField('Author Information', `name: ${message?.author?.username}\ntag: ${message?.author?.tag}\nid: ${message?.author?.id}`);
+        embed.addField('Category Information', `name: ${message?.channel?.parent?.name}\nid: ${message?.channel?.parentId}`)
+        embed.addField('Channel Information', `name: ${message?.channel?.name}\nid: ${message?.channel?.id}`);
+        embed.setColor('#2F4562');
+        embed.setTimestamp();
+
+        channel.send({
+          embeds: [embed]
+        });
+        
+        if (message.attachments.size > 0) {
+          channel.send(`__Attachments Deleted__`);
+          message.attachments.forEach((attachment: any) => {
+              const link = attachment.url;
+              channel.send({ 
+                files: [link] 
+              });
+          });
+        }
+      });
+};
+
+client.on("messageDelete", async (message) => {
+    if(!message.guild) 
+        return;
+
+    await sendDeletedMessage(message);
+});
+
 // Host server
 keepAlive();
 
 // Login with token
-client.login(token).catch(() => {
+client.login(token)/* .catch(() => {
+  
 });
-
+ */
 function InitializeModule(module: CoCoModule) {
   modules.set(module.name, module);
   if (module.service) module.service(client);
@@ -125,3 +163,4 @@ run();
 
 // Sends New Year Message
 startJob(client);
+
