@@ -113,12 +113,26 @@ const sendDeletedMessage = async(message: any) => {
   let trackingChannelId = '967560432732766280';
     await message.guild.channels.fetch(trackingChannelId)
       .then((channel: any) => {
-        let msg = `__ID:__ ${message?.author?.id} \n__Tag:__ ${message?.author?.tag} \n__Deleted Message:__ ${message?.content}`;
-        channel.send(msg);
-        if (message.attachments) {
+        const embed = new Discord.MessageEmbed();
+        embed.setTitle(`Deleted Message`);
+        embed.setDescription(message?.content);
+        embed.addField('Author Information', `name: ${message?.author?.username}\ntag: ${message?.author?.tag}\nid: ${message?.author?.id}`);
+        embed.addField('Category Information', `name: ${message?.channel?.parent?.name}\nid: ${message?.channel?.parentId}`)
+        embed.addField('Channel Information', `name: ${message?.channel?.name}\nid: ${message?.channel?.id}`);
+        embed.setColor('#2F4562');
+        embed.setTimestamp();
+
+        channel.send({
+          embeds: [embed]
+        });
+        
+        if (message.attachments.size > 0) {
+          channel.send(`__Attachments Deleted__`);
           message.attachments.forEach((attachment: any) => {
               const link = attachment.url;
-              channel.send({ files: [link] });
+              channel.send({ 
+                files: [link] 
+              });
           });
         }
       });
