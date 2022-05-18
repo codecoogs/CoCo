@@ -109,16 +109,15 @@ client.on('messageCreate', async message => {
   if (commandHandler.command) commandHandler.command(message, args, client, modules);
 });
 
-const sendDeletedMessage = async(message: any) => {
+const sendDeletedMessage = async (message: any) => {
   let trackingChannelId = '967560432732766280';
-    await message.guild.channels.fetch(trackingChannelId)
+  await message.guild.channels.fetch(trackingChannelId)
       .then((channel: any) => {
         const embed = new Discord.MessageEmbed();
         embed.setTitle(`Deleted Message`);
-        embed.setDescription(message?.content);
+        embed.setDescription(`<#${message?.channel?.id}>`);
+        embed.addField('Content', `${message?.content}`);
         embed.addField('Author Information', `name: ${message?.author?.username}\ntag: ${message?.author?.tag}\nid: ${message?.author?.id}`);
-        embed.addField('Category Information', `name: ${message?.channel?.parent?.name}\nid: ${message?.channel?.parentId}`)
-        embed.addField('Channel Information', `name: ${message?.channel?.name}\nid: ${message?.channel?.id}`);
         embed.setColor('#2F4562');
         embed.setTimestamp();
 
@@ -144,6 +143,32 @@ client.on("messageDelete", async (message) => {
 
     await sendDeletedMessage(message);
 });
+
+const sendEditedMessage = async (oldMessage: any, newMessage: any) => {
+  let trackingChannelId = '967560432732766280';
+  await oldMessage.guild.channels.fetch(trackingChannelId)
+        .then((channel: any) => {
+            const embed = new Discord.MessageEmbed();
+            embed.setTitle(`Edited Message`);
+            embed.setDescription(`<#${oldMessage?.channel?.id}>`);
+            embed.addField('Old Content', `${oldMessage?.content}`);
+            embed.addField('New Content', `${newMessage?.content}`);
+            embed.addField('Author Information', `name: ${oldMessage?.author?.username}\ntag: ${oldMessage?.author?.tag}\nid: ${oldMessage?.author?.id}`);
+            embed.setColor('#2F4562');
+            embed.setTimestamp();
+            
+            channel.send({
+                embeds: [embed]
+            });
+        });
+}
+
+client.on("messageUpdate", async (oldMessage, newMessage) => {
+    if(!oldMessage.guild)
+        return;
+
+    await sendEditedMessage(oldMessage, newMessage);
+}); 
 
 // Host server
 keepAlive();
