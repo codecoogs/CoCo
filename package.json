@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/LeftAutomated/CoCo#readme",
   "dependencies": {
-    "canvas": "^2.8.0",
+    "canvas": "^2.9.3",
     "common-tags": "^1.8.0",
     "cron": "^1.8.2",
     "discord.js": "^13.2.0",
