@@ -17,6 +17,7 @@ const PointsModule: CoCoModule = {
         if(args[0] == undefined) {
           return message.channel.send(`coco-points me \n Display your points \n\n coco-points lb \n Display leaderboard \n\n coco-points @mention \n Display mentioned user's points`);
         }
+
         // Array of objects
         let membersData: MembersData = await runGS();
 
@@ -36,7 +37,6 @@ const PointsModule: CoCoModule = {
             }
 
             return message.channel.send(`You are not in the database. If you should be, contact wizard.`);
-
         }
         // Leaderboard
         else if(args[0] == "lb"){
@@ -60,7 +60,7 @@ const PointsModule: CoCoModule = {
             });
 
             let topMembersData = membersDataArr.slice(0, top);
-            console.log(topMembersData);
+
             for(let i = 0; i < top; i++){
                 const memberData: any = topMembersData[i][1];
                 embed.addFields(
@@ -83,7 +83,7 @@ const PointsModule: CoCoModule = {
             if (!user) {
                 return message.channel.send("Person does not exist.");
             }
-            
+          
             const mentionMemberData = membersData[user.tag];
           
             if(!mentionMemberData) {

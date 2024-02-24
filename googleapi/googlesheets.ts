@@ -16,7 +16,6 @@ export async function runGS() {
         const client = await auth.getClient();
 
     const googleSheets = google.sheets({ version: "v4", auth: client });
-
     
     // OLD: const spreadsheetId = "1yabGmzEayg61qb7NzQcX74uOiTkw9cXIbCEaIXMWcOI";
     const spreadsheetId = "1wF3gWdRq0Tr9kaZpG4ssPIxYgwO0rVovOc5H7E3UVIg";
@@ -67,7 +66,7 @@ export async function runGS() {
             membersData[tagData[i]] = tempData;
         }
     }
-  
+
     return membersData;
 }
 
