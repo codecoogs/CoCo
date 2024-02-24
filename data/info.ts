@@ -1,5 +1,5 @@
 export const RULES_MESSAGE_ID = '898697885863002113';
-export const OFFICERS_MESSAGE_ID = '899830901146521601';
+export const OFFICERS_MESSAGE_ID = '1070777857112014879';
 export const SOCIALS_MESSAGE_ID = '899884077157605457';
 export const ABOUTUS_MESSAGE1_ID = '904794447294894090';
 export const ABOUTUS_MESSAGE2_ID = '904794465460441118';
@@ -9,62 +9,70 @@ Code Coogs Discord Rules
 
 =================================================================================================
 
-1 | Be respectful, civil, and welcoming.
+01 | Be respectful, civil, and welcoming.
 
-2 | No inappropriate or unsafe content.
+02 | No inappropriate or unsafe content.
 
-3 | Do not misuse or spam in any of the channels.
+03 | Do not misuse or spam in any of the channels.
 
-4 | Any content that is NSFW is not allowed under any circumstances.
+04 | Any content that is NSFW is not allowed under any circumstances.
 
-5 | Discord names and avatars must be appropriate.
+05 | Discord names and avatars must be appropriate.
 
-6 | Anything to target specific groups/individuals is prohibited.
+06 | Anything to target specific groups/individuals is prohibited.
 
-7 | Do not record voice channel conversations.
+07 | Do not record voice channel conversations.
 
-8 | Discriminatory language and hate speech is forbidden.
+08 | Discriminatory language and hate speech is forbidden.
 
-9 | Bullying and harassment is not tolerated.
+09 | Bullying and harassment is not tolerated.
+
+10 | Trolling will not be tolerated.
 
 =================================================================================================
 
-Subject to change.
+You will be given 2 warnings and kicked on the 3rd. 
+To get back into the server you will have to write a one page essay on why you should be admitted back, and my officer team will decide if to admit you or not, but that is only if you do not want to wait a year, after a year you can join back without writing the essay. 
+The essay is optional if you do not want to wait a year. 
+This is not a joke. 
+This is not bluff. 
+You will be kicked. 
+All you have to do is follow the rules. 
+Simplicity.
 
-React to gain access other channels
+React to gain access to other channels
 \`\`\``;
 export const OFFICERS_MESSAGE = `\`\`\`yaml
 Code Coogs Officers
 
 =================================================================================================
 
-President : Tailer 
+# Executive
+President - Allie
+VP Internal - Richer
+VP External - Hieu
+Secretary - Ilan
+Senior Advisor - Jake
 
-VP of External Affairs : Tori 
+# Event Planning
+Competitions - Benjamin
+Workshops - Parsa
+Activities - Andrew 
 
-VP of Internal Affairs : Jake
+# Member Affairs
+Marketing - Jackson
+Teams - Alfredo
+Teams - Tony
+Teams - Ayush
+Historian - Saloni
+Corporate Relations - Jorge
 
-Treasurer : Jennifer F
+# Creative
+Artist - Khanh
+Artist - Widyan
 
-Marketing Director : Lupita
-
-Activities Director : Omar
-
-Artist : Jennifer H
-
-Competitive Programming Director : Nghia 
-
-Workshop Director : Abdullah
-
-Discord Bot Wizard : Bryant
-
-Webmaster : Abdullah
-
-Workshop Facilitator : Eithan, Frank, Bryant, Abdullah, Sandy, William, Brandon
-
-=================================================================================================
-
-Subject to change.
+# IT Department
+Wizard - Bryant
 
 \`\`\``;
 export const SOCIALS_MESSAGE = `

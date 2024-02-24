@@ -24,10 +24,15 @@ const PointsModule: CoCoModule = {
         if(args[0] == "me"){
 
             const tag = message.author.tag;
+            const username = message.author.username;
             
-            if(tag in membersData){
+            if(tag in membersData) {
                 const memberData: MemberData = membersData[tag];
                 return message.channel.send(`${memberData.name}, you have ${memberData.point} coco points.`);
+            }
+            else if (username in membersData) {
+              const memberData: MemberData = membersData[username];
+              return message.channel.send(`${memberData.name}, you have ${memberData.point} coco points.`);
             }
 
             return message.channel.send(`You are not in the database. If you should be, contact wizard.`);
@@ -39,7 +44,7 @@ const PointsModule: CoCoModule = {
             const embed = new Discord.MessageEmbed();
 
             // How many people to display on leaderboard
-            const top = 5;
+            const top = 15;
 
             embed.setTitle(`Top ${top} Leaderboard`);
             embed.setColor('#2F4562');
@@ -55,7 +60,7 @@ const PointsModule: CoCoModule = {
             });
 
             let topMembersData = membersDataArr.slice(0, top);
-
+            console.log(topMembersData);
             for(let i = 0; i < top; i++){
                 const memberData: any = topMembersData[i][1];
                 embed.addFields(
@@ -78,10 +83,14 @@ const PointsModule: CoCoModule = {
             if (!user) {
                 return message.channel.send("Person does not exist.");
             }
-
+            
             const mentionMemberData = membersData[user.tag];
-
-            return message.channel.send(`${mentionMemberData.name} has ${mentionMemberData.point} coco points.`);
+          
+            if(!mentionMemberData) {
+              return message.channel.send("Incorrect tag.");
+            }
+          
+            return message.channel.send(`${mentionMemberData?.name} has ${mentionMemberData.point} coco points.`);        
         }
 
     }

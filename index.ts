@@ -48,13 +48,7 @@ client.on('ready', () => {
 // Message handling
 const sendWelcomeMessage = (message: any) => {
   let rulesChannelId = "897566470387671092";
-  let ran = Math.floor((Math.random() * 10) + 1);
-    if (ran === 1)
-      message.channel.send(`I lost my life savings from dogecoin now go read <#${rulesChannelId}>`);
-    else if (ran === 2)
-      message.channel.send(`I bet you won't read <#${rulesChannelId}>`);
-    else if (ran === 3)
-      message.channel.send(`Read <#${rulesChannelId}> if you want rough brain`);
+  message.channel.send(`To gain access to other channels, read and react to <#${rulesChannelId}>`);
 };
 
 const deleteMessagesInWrongChannel = async(message: any, botCommandChannelId: string) => {
@@ -73,16 +67,46 @@ const deleteMessagesInWrongChannel = async(message: any, botCommandChannelId: st
     }, 15000);
 };
 
+const getRandomUniqueStrings = (array: string[], count: number): string[] | null => {
+  if (count > array.length) {
+    console.error("Count is greater than the length of the array.");
+    return null;
+  }
+
+  const shuffledArray = array.slice(); // Create a shallow copy of the array
+  const result: string[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const randomIndex = Math.floor(Math.random() * shuffledArray.length);
+    const randomString = shuffledArray.splice(randomIndex, 1)[0];
+    result.push(randomString);
+  }
+
+  return result;
+}
+
 client.on('messageCreate', async message => {
 
   // Skip if message from bot
   if (message.author.bot)
     return;
   
-  // Welcome channel is undefined when not found
-  let welcomeChannel = message.guild?.channels.cache.find(c => c.name === 'welcome');
-  if (welcomeChannel && message.channelId === welcomeChannel.id) {
-    sendWelcomeMessage(message);
+  // let welcomeChannel = message.guild?.channels.cache.find(c => c.name === 'welcome');
+  let announcementsChannelId = "897619522863919165";
+  let compInfoChannelId = "904202427132166154";
+  if (message.channelId === announcementsChannelId || message.channelId === compInfoChannelId) {
+    //sendWelcomeMessage(message);
+    const emojiList = message.guild?.emojis.cache.map((emoji) => `<:${emoji.name}:${emoji.id}>`);
+    
+    if (!emojiList) return;
+
+    const randomEmojiList = getRandomUniqueStrings(emojiList, 10);
+
+    if (!randomEmojiList) return;
+    
+    for (const emoji of randomEmojiList) {
+      await message.react(emoji);
+    }
   }
 
   if (!message.content.startsWith(prefix))
@@ -184,7 +208,7 @@ function InitializeModule(module: CoCoModule) {
 }
 
 // Instagram Post Webhook
-run();
+//run();
 
 // Sends New Year Message
 startJob(client);

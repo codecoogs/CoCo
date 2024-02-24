@@ -17,10 +17,14 @@ export async function runGS() {
 
     const googleSheets = google.sheets({ version: "v4", auth: client });
 
-    const spreadsheetId = "1bPJsKQK2kSC5D9mn_LoAInBqg-wQxk6oZuXYHkRUEsA";
+    
+    // OLD: const spreadsheetId = "1yabGmzEayg61qb7NzQcX74uOiTkw9cXIbCEaIXMWcOI";
+    const spreadsheetId = "1wF3gWdRq0Tr9kaZpG4ssPIxYgwO0rVovOc5H7E3UVIg";
 
-    const sheetName = "Members";
-    const columns = ['A', 'B', 'C'];
+    // OLD: const sheetName = "Members";
+    const sheetName = "Member Points";
+  
+    const columns = ['A', 'B', 'D'];
 
     const getNameRows = await googleSheets.spreadsheets.values.get({
         auth,
@@ -63,6 +67,7 @@ export async function runGS() {
             membersData[tagData[i]] = tempData;
         }
     }
+  
     return membersData;
 }
 
