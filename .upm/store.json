@@ -1,0 +1,1 @@
+{"version":2,"languages":{"nodejs-npm":{"specfileHash":"fc8f33ac563932b08474fae8769c5202","lockfileHash":"56bd6dfc688a9b87b8f04c2bb596b279","guessedImports":["common-tags","node-fetch","canvas","cron","googleapis","dotenv","discord.js","express"],"guessedImportsHash":"619c35ae66480346fcf3bf8d00c9008b"}}}
