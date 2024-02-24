@@ -7,7 +7,7 @@ Download **NodeJS v16.6+** at https://nodejs.org/en/
 
 Download this repo in your desired directory
 ```
-git clone https://github.com/LeftAutomated/CoCo.git
+git clone https://github.com/CodeCoogs/CoCo.git
 ```
 
 Change to the cloned directory
